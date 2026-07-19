@@ -1,0 +1,60 @@
+@import "tailwindcss";
+
+@theme {
+  --color-blue: #0052CC;
+  --color-blue-hover: #0065FF;
+  --color-blue-light: #F4F9FF;
+  --color-blue-50: #F4F9FF;
+  --color-blue-100: #E6F0FF;
+  --color-bg: #FFFFFF;
+  --color-bg-raised: #FAFBFB;
+  --color-bg-card: #FFFFFF;
+  --color-bg-subtle: #F4F5F7;
+  --color-border: #DFE1E6;
+  --color-text: #172B4D;
+  --color-text-secondary: #5E6C84;
+  --color-text-muted: #7A869A;
+  --color-terminal: #1D2125;
+  --color-terminal-border: rgba(255,255,255,.08);
+
+  --radius-jira: 3px;
+  --radius-terminal: 8px;
+
+  --shadow-jira: 0 1px 1px rgba(9,30,66,.08), 0 0 1px rgba(9,30,66,.12);
+  --shadow-raised: 0 2px 4px -2px rgba(9,30,66,.08), 0 4px 8px -2px rgba(9,30,66,.12);
+  --shadow-terminal: 0 4px 12px rgba(0,0,0,.25), 0 1px 3px rgba(0,0,0,.15);
+}
+
+body {
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Noto Sans", Ubuntu, "Droid Sans", "Helvetica Neue", sans-serif;
+  -webkit-font-smoothing: antialiased;
+}
+
+code, pre {
+  font-family: 'JetBrains Mono', monospace;
+}
+
+::selection {
+  background-color: var(--color-blue-100);
+  color: var(--color-blue);
+}
+
+.terminal-header::before {
+  content: '';
+  display: flex;
+  gap: 6px;
+}
+
+.terminal-dot {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+}
+
+.terminal-dot:nth-child(1) { background: #FF5F56; }
+.terminal-dot:nth-child(2) { background: #FFBD2E; }
+.terminal-dot:nth-child(3) { background: #27C93F; }
+
+@media (max-width: 640px) {
+  .container { padding-left: 16px; padding-right: 16px; }
+}
