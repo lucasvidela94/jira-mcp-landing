@@ -66,7 +66,7 @@ const tools = [
   </div>
 
   <!-- TERMINAL -->
-  <div id="cli" class="section-shaded">
+  <div id="cli" class="section-shaded" style="scroll-margin-top: 24px;">
     <div class="container" style="max-width: 740px;">
       <div class="terminal">
         <div class="terminal-header">
@@ -76,12 +76,12 @@ const tools = [
           <span class="terminal-title">jira-mcp</span>
         </div>
         <div class="terminal-body">
-          <div class="line cmd"><span>$ jira-mcp list-boards MC</span></div>
-          <div class="line out"><span set:text={'[{"id":265,"name":"MC board","type":"simple"}]'}></span></div>
-          <div class="line cmd"><span>$ jira-mcp get-active-sprint 265</span></div>
-          <div class="line out"><span set:text={'{"id":1268,"name":"MC Sprint 15","state":"active"}'}></span></div>
-          <div class="line cmd"><span>$ jira-mcp search "sprint = 1268"</span></div>
-          <div class="line out"><span set:text={'{"total":25,"issues":[...]}'}></span></div>
+          <div class="line cmd"><span>jira-mcp list-boards MC</span></div>
+          <div class="line out"><span>{`[{"id":265,"name":"MC board","type":"simple"}]`}</span></div>
+          <div class="line cmd"><span>jira-mcp get-active-sprint 265</span></div>
+          <div class="line out"><span>{`{"id":1268,"name":"MC Sprint 15","state":"active"}`}</span></div>
+          <div class="line cmd"><span>jira-mcp search "sprint = 1268"</span></div>
+          <div class="line out"><span>{`{"total":25,"issues":[...]}`}</span></div>
         </div>
       </div>
     </div>
@@ -128,7 +128,7 @@ const tools = [
   </div>
 
   <!-- INSTALL -->
-  <div id="install" class="section-shaded">
+  <div id="install" class="section-shaded" style="scroll-margin-top: 24px;">
     <div class="container" style="max-width: 680px;">
       <h2 style="text-align: center;">Install in seconds</h2>
       <p class="subtitle" style="text-align: center;">macOS, Linux, Windows, ARM64. Choose your path.</p>
@@ -140,7 +140,7 @@ const tools = [
             <span class="terminal-title">Homebrew</span>
           </div>
           <div class="terminal-body">
-            <div class="line cmd"><span>$ brew tap lucasvidela94/tap && brew install jira-mcp</span></div>
+            <div class="line cmd"><span>brew tap lucasvidela94/tap && brew install jira-mcp</span></div>
           </div>
         </div>
 
@@ -150,7 +150,7 @@ const tools = [
             <span class="terminal-title">Install script</span>
           </div>
           <div class="terminal-body">
-            <div class="line cmd"><span>$ curl -fsSL https://raw.githubusercontent.com/lucasvidela94/jira-mcp/master/scripts/install.sh | bash</span></div>
+            <div class="line cmd"><span>curl -fsSL https://raw.githubusercontent.com/lucasvidela94/jira-mcp/master/scripts/install.sh | bash</span></div>
           </div>
         </div>
 
@@ -160,7 +160,7 @@ const tools = [
             <span class="terminal-title">Go</span>
           </div>
           <div class="terminal-body">
-            <div class="line cmd"><span>$ go install github.com/lucasvidela94/jira-mcp@latest</span></div>
+            <div class="line cmd"><span>go install github.com/lucasvidela94/jira-mcp@latest</span></div>
           </div>
         </div>
       </div>
@@ -185,11 +185,11 @@ const tools = [
           <span class="terminal-title">Configuration</span>
         </div>
         <div class="terminal-body">
-          <div class="line cmd"><span>$ export JIRA_URL=https://yourcompany.atlassian.net</span></div>
-          <div class="line cmd"><span>$ export JIRA_USERNAME=you@example.com</span></div>
-          <div class="line cmd"><span>$ export JIRA_API_TOKEN=your-token</span></div>
+          <div class="line cmd"><span>export JIRA_URL=https://yourcompany.atlassian.net</span></div>
+          <div class="line cmd"><span>export JIRA_USERNAME=you@example.com</span></div>
+          <div class="line cmd"><span>export JIRA_API_TOKEN=your-token</span></div>
           <div class="line arrow"><span># Optional: restrict which tools the AI can see</span></div>
-          <div class="line cmd"><span>$ export ENABLED_TOOLS="jira_search,jira_get_issue,jira_list_projects"</span></div>
+          <div class="line cmd"><span>export ENABLED_TOOLS="jira_search,jira_get_issue,jira_list_projects"</span></div>
         </div>
       </div>
     </div>
