@@ -1,15 +1,6 @@
 ---
 import Layout from '../layouts/Layout.astro';
 
-const demoLines = [
-  { type: 'cmd', text: '$ jira-mcp list-boards MC' },
-  { type: 'output', text: '[{id:265,name:MC board,type:simple}]' },
-  { type: 'cmd', text: '$ jira-mcp get-active-sprint 265' },
-  { type: 'output', text: '{id:1268,name:MC Sprint 15,state:active}' },
-  { type: 'cmd', text: '$ jira-mcp search "sprint = 1268"' },
-  { type: 'output', text: '{total:25,issues:[...]}' },
-];
-
 const tools = [
   { name: 'jira_search', desc: 'Search issues using JQL' },
   { name: 'jira_get_issue', desc: 'Get issue by key' },
@@ -40,214 +31,194 @@ const tools = [
 
 <Layout>
 
-  <!-- NAV -->
-  <nav style="position: sticky; top: 0; z-index: 100; backdrop-filter: blur(12px); background: rgba(13, 17, 23, 0.8); border-bottom: 1px solid var(--border);">
-    <div class="container" style="display: flex; align-items: center; justify-content: space-between; height: 60px;">
-      <a href="/" style="display: flex; align-items: center; gap: 10px; font-weight: 700; font-size: 18px; color: var(--text-primary); text-decoration: none;">
-        <svg width="24" height="24" viewBox="0 0 24 24" fill="none"><rect width="24" height="24" rx="6" fill="var(--jira-blue)"/><text x="12" y="16" text-anchor="middle" fill="white" font-size="14" font-weight="bold">J</text></svg>
+  <!-- HERO -->
+  <div style="background: linear-gradient(180deg, var(--bg) 0%, var(--bg-raised) 100%); border-bottom: 1px solid var(--border);">
+    <nav style="display: flex; align-items: center; justify-content: space-between; height: 56px; padding: 0 24px; max-width: 1000px; margin: 0 auto;">
+      <a href="/" style="display: flex; align-items: center; gap: 8px; font-weight: 700; font-size: 16px; color: var(--text); text-decoration: none;">
+        <svg width="20" height="20" viewBox="0 0 100 100"><rect width="100" height="100" rx="16" fill="#0052CC"/><text x="50" y="65" text-anchor="middle" fill="white" font-size="55" font-weight="bold" font-family="system-ui">J</text></svg>
         jira-mcp
       </a>
-      <div style="display: flex; gap: 16px; align-items: center;">
-        <a href="https://github.com/lucasvidela94/jira-mcp" target="_blank" style="display: flex; align-items: center; gap: 6px; font-size: 14px; color: var(--text-secondary);">
-          <svg width="16" height="16" viewBox="0 0 16 16" fill="currentColor"><path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0016 8c0-4.42-3.58-8-8-8z"/></svg>
-          GitHub
-        </a>
-      </div>
-    </div>
-  </nav>
+      <a href="https://github.com/lucasvidela94/jira-mcp" target="_blank" style="display: flex; align-items: center; gap: 6px; color: var(--text-secondary); font-size: 14px;">
+        <svg width="16" height="16" viewBox="0 0 16 16" fill="currentColor"><path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0016 8c0-4.42-3.58-8-8-8z"/></svg>
+        GitHub
+      </a>
+    </nav>
 
-  <!-- HERO -->
-  <section style="padding: 100px 0 80px; text-align: center; position: relative; overflow: hidden;">
-    <div style="position: absolute; top: -200px; left: 50%; transform: translateX(-50%); width: 800px; height: 800px; background: radial-gradient(circle, rgba(0,82,204,0.08) 0%, transparent 70%); pointer-events: none;"></div>
-    <div class="container" style="position: relative;">
-      <span class="tag tag-blue">v0.5.0 &middot; 24 tools</span>
-      <h1 style="font-size: clamp(2.5rem, 6vw, 4.5rem); font-weight: 800; line-height: 1.1; margin: 24px 0 16px; letter-spacing: -0.03em;">
+    <div style="padding: 80px 24px 72px; text-align: center;">
+      <span class="tag tag-blue" style="margin-bottom: 16px;">v0.5.0 &middot; 24 tools</span>
+      <h1 style="font-size: clamp(2.2rem, 5vw, 3.6rem); font-weight: 800; letter-spacing: -0.03em; line-height: 1.1; margin-bottom: 12px; color: var(--text);">
         Jira, meet AI.
       </h1>
-      <p style="font-size: clamp(1.05rem, 2vw, 1.25rem); color: var(--text-secondary); max-width: 600px; margin: 0 auto 36px;">
-        A single, dependency-free binary that connects your AI tools to Jira Cloud.
-        Search, create, update, and manage issues directly from Claude, Cursor, OpenCode, or any MCP client.
+      <p style="font-size: 17px; color: var(--text-secondary); max-width: 560px; margin: 0 auto 28px; line-height: 1.6;">
+        A single Go binary that connects your AI tools to Jira&nbsp;Cloud.
+        Search, create, update, and manage issues from any MCP-compatible client.
       </p>
-      <div style="display: flex; gap: 12px; justify-content: center; flex-wrap: wrap;">
+      <div style="display: flex; gap: 8px; justify-content: center; flex-wrap: wrap;">
         <a href="#install" class="btn btn-primary">
-          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4M7 10l5 5 5-5M12 15V3"/></svg>
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4M7 10l5 5 5-5M12 15V3"/></svg>
           Install
         </a>
-        <a href="https://github.com/lucasvidela94/jira-mcp" target="_blank" class="btn btn-ghost">
-          <svg width="16" height="16" viewBox="0 0 16 16" fill="currentColor"><path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0016 8c0-4.42-3.58-8-8-8z"/></svg>
-          Source
+        <a href="#cli" class="btn btn-ghost">
+          Try the CLI
         </a>
       </div>
     </div>
-  </section>
+  </div>
 
-  <!-- DEMO TERMINAL -->
-  <section style="padding: 0 0 100px;">
+  <!-- TERMINAL -->
+  <div id="cli" class="section-shaded">
     <div class="container" style="max-width: 740px;">
-      <div class="terminal-window">
+      <div class="terminal">
         <div class="terminal-header">
-          <span class="terminal-dot"></span>
-          <span class="terminal-dot"></span>
-          <span class="terminal-dot"></span>
-          <span class="terminal-title">~ — jira-mcp</span>
+          <span class="dot"></span>
+          <span class="dot"></span>
+          <span class="dot"></span>
+          <span class="terminal-title">jira-mcp</span>
         </div>
         <div class="terminal-body">
-          <span class="terminal-line"><span class="prompt" set:text={'$'} /> <span class="cmd">jira-mcp list-boards MC</span></span>
-          <span class="terminal-line"><span class="output" set:text={'[{"id":265,"name":"MC board","type":"simple"}]'} /></span>
-          <span class="terminal-line"><span class="prompt" set:text={'$'} /> <span class="cmd">jira-mcp get-active-sprint 265</span></span>
-          <span class="terminal-line"><span class="output" set:text={'{"id":1268,"name":"MC Sprint 15","state":"active"}'} /></span>
-          <span class="terminal-line"><span class="prompt" set:text={'$'} /> <span class="cmd">jira-mcp search "sprint = 1268"</span></span>
-          <span class="terminal-line"><span class="output" set:text={'{"total":25,"issues":[...]}'} /></span>
+          <div class="line cmd"><span>$ jira-mcp list-boards MC</span></div>
+          <div class="line out"><span set:text={'[{"id":265,"name":"MC board","type":"simple"}]'}></span></div>
+          <div class="line cmd"><span>$ jira-mcp get-active-sprint 265</span></div>
+          <div class="line out"><span set:text={'{"id":1268,"name":"MC Sprint 15","state":"active"}'}></span></div>
+          <div class="line cmd"><span>$ jira-mcp search "sprint = 1268"</span></div>
+          <div class="line out"><span set:text={'{"total":25,"issues":[...]}'}></span></div>
         </div>
       </div>
     </div>
-  </section>
+  </div>
 
-  <!-- FEATURES -->
-  <section style="padding: 80px 0; border-top: 1px solid var(--border);">
+  <!-- WHY -->
+  <div class="section">
     <div class="container">
-      <h2 style="font-size: 2rem; font-weight: 700; margin-bottom: 12px; text-align: center;">Why jira-mcp?</h2>
-      <p style="text-align: center; color: var(--text-secondary); max-width: 500px; margin: 0 auto 48px;">Built for developers who want their AI tools to speak Jira natively.</p>
-      <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 20px;">
-        
+      <h2 style="text-align: center;">Why jira-mcp?</h2>
+      <p class="subtitle" style="text-align: center;">Built for developers who want their AI tools to speak Jira natively.</p>
+      <div class="card-grid">
         <div class="card">
-          <span class="tag tag-blue" style="margin-bottom: 12px;">Zero friction</span>
-          <h3 style="font-size: 17px; margin-bottom: 8px;">Single binary, no runtime</h3>
-          <p style="font-size: 14px; color: var(--text-secondary); line-height: 1.6;">Written in Go. No Python, no Node, no Docker required. Download and run — that's it.</p>
+          <div class="card-icon"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="2"/><path d="M12 2a10 10 0 000 20"/><path d="M12 2a10 10 0 010 20"/></svg></div>
+          <h3>Zero-friction binary</h3>
+          <p>Written in Go. No Python, no Node, no runtime. One binary, one command, done.</p>
         </div>
-
         <div class="card">
-          <span class="tag tag-green" style="margin-bottom: 12px;">24 tools</span>
-          <h3 style="font-size: 17px; margin-bottom: 8px;">Full Jira coverage</h3>
-          <p style="font-size: 14px; color: var(--text-secondary); line-height: 1.6;">Issues, sprints, boards, history, versions, linking, sub-tasks, dev info — everything your AI needs.</p>
+          <div class="card-icon"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M3 9h18"/></svg></div>
+          <h3>24 tools</h3>
+          <p>Issues, sprints, boards, history, versions, linking, sub-tasks, dev info — full Jira coverage.</p>
         </div>
-
         <div class="card">
-          <span class="tag tag-purple" style="margin-bottom: 12px;">Safe by design</span>
-          <h3 style="font-size: 17px; margin-bottom: 8px;">Built-in security</h3>
-          <p style="font-size: 14px; color: var(--text-secondary); line-height: 1.6;">Credentials are never logged, leaked, or returned in tool results. Sanitized at two layers.</p>
+          <div class="card-icon"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0110 0v4"/></svg></div>
+          <h3>Safe by design</h3>
+          <p>Credentials are never logged, leaked, or returned in tool results. Sanitized at two layers.</p>
         </div>
-
         <div class="card">
-          <span class="tag tag-blue" style="margin-bottom: 12px;">CLI + MCP</span>
-          <h3 style="font-size: 17px; margin-bottom: 8px;">Two interfaces</h3>
-          <p style="font-size: 14px; color: var(--text-secondary); line-height: 1.6;">Run as an MCP server for your AI client, or use the standalone CLI directly in your terminal.</p>
+          <div class="card-icon"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="16 3 21 3 21 8"/><path d="M4 14l6-6 4 4 6-6"/><path d="M21 11v7a2 2 0 01-2 2H5a2 2 0 01-2-2V6a2 2 0 012-2h7"/></svg></div>
+          <h3>CLI + MCP</h3>
+          <p>Run as an MCP server for your AI client, or use the standalone CLI directly in your terminal.</p>
         </div>
-
         <div class="card">
-          <span class="tag tag-green" style="margin-bottom: 12px;">HTTP/SSE</span>
-          <h3 style="font-size: 17px; margin-bottom: 8px;">Remote or local</h3>
-          <p style="font-size: 14px; color: var(--text-secondary); line-height: 1.6;">stdio for local use, HTTP/SSE for remote — or Docker for containerized deployments.</p>
+          <div class="card-icon"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 16V8a2 2 0 00-1-1.73l-7-4a2 2 0 00-2 0l-7 4A2 2 0 002 8v8a2 2 0 001 1.73l7 4a2 2 0 002 0l7-4A2 2 0 0021 16z"/><circle cx="12" cy="12" r="2"/></svg></div>
+          <h3>HTTP/SSE + Docker</h3>
+          <p>stdio for local, HTTP/SSE for remote, Docker for containers. Works everywhere.</p>
         </div>
-
         <div class="card">
-          <span class="tag tag-purple" style="margin-bottom: 12px;">Self-updating</span>
-          <h3 style="font-size: 17px; margin-bottom: 8px;">Stay current</h3>
-          <p style="font-size: 14px; color: var(--text-secondary); line-height: 1.6;">`jira-mcp update` checks GitHub releases and replaces itself. No package manager needed.</p>
+          <div class="card-icon"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M23 4v6h-6M1 20v-6h6"/><path d="M20.19 7A10 10 0 004 16.95M3.81 17A10 10 0 0020 7.05"/></svg></div>
+          <h3>Self-updating</h3>
+          <p><span class="cmd">jira-mcp update</span> checks GitHub releases and replaces itself. No package manager needed.</p>
         </div>
-
       </div>
     </div>
-  </section>
+  </div>
 
   <!-- INSTALL -->
-  <section id="install" style="padding: 80px 0; border-top: 1px solid var(--border);">
-    <div class="container" style="max-width: 740px;">
-      <h2 style="font-size: 2rem; font-weight: 700; margin-bottom: 12px; text-align: center;">Install in seconds</h2>
-      <p style="text-align: center; color: var(--text-secondary); margin-bottom: 36px;">Works on macOS, Linux, Windows, and ARM64.</p>
+  <div id="install" class="section-shaded">
+    <div class="container" style="max-width: 680px;">
+      <h2 style="text-align: center;">Install in seconds</h2>
+      <p class="subtitle" style="text-align: center;">macOS, Linux, Windows, ARM64. Choose your path.</p>
 
-      <div class="terminal-window" style="margin-bottom: 16px;">
-        <div class="terminal-header">
-          <span class="terminal-dot"></span>
-          <span class="terminal-dot"></span>
-          <span class="terminal-dot"></span>
-          <span class="terminal-title">brew</span>
+      <div style="display: grid; gap: 12px;">
+        <div class="terminal">
+          <div class="terminal-header">
+            <span class="dot"></span><span class="dot"></span><span class="dot"></span>
+            <span class="terminal-title">Homebrew</span>
+          </div>
+          <div class="terminal-body">
+            <div class="line cmd"><span>$ brew tap lucasvidela94/tap && brew install jira-mcp</span></div>
+          </div>
         </div>
-        <div class="terminal-body">
-          <span class="terminal-line"><span class="prompt">$</span> <span class="cmd">brew tap lucasvidela94/tap && brew install jira-mcp</span></span>
+
+        <div class="terminal">
+          <div class="terminal-header">
+            <span class="dot"></span><span class="dot"></span><span class="dot"></span>
+            <span class="terminal-title">Install script</span>
+          </div>
+          <div class="terminal-body">
+            <div class="line cmd"><span>$ curl -fsSL https://raw.githubusercontent.com/lucasvidela94/jira-mcp/master/scripts/install.sh | bash</span></div>
+          </div>
+        </div>
+
+        <div class="terminal">
+          <div class="terminal-header">
+            <span class="dot"></span><span class="dot"></span><span class="dot"></span>
+            <span class="terminal-title">Go</span>
+          </div>
+          <div class="terminal-body">
+            <div class="line cmd"><span>$ go install github.com/lucasvidela94/jira-mcp@latest</span></div>
+          </div>
         </div>
       </div>
 
-      <div class="terminal-window" style="margin-bottom: 16px;">
-        <div class="terminal-header">
-          <span class="terminal-dot"></span>
-          <span class="terminal-dot"></span>
-          <span class="terminal-dot"></span>
-          <span class="terminal-title">curl</span>
-        </div>
-        <div class="terminal-body">
-          <span class="terminal-line"><span class="prompt">$</span> <span class="cmd">curl -fsSL https://raw.githubusercontent.com/lucasvidela94/jira-mcp/master/scripts/install.sh | bash</span></span>
-        </div>
-      </div>
-
-      <div class="terminal-window">
-        <div class="terminal-header">
-          <span class="terminal-dot"></span>
-          <span class="terminal-dot"></span>
-          <span class="terminal-dot"></span>
-          <span class="terminal-title">go</span>
-        </div>
-        <div class="terminal-body">
-          <span class="terminal-line"><span class="prompt">$</span> <span class="cmd">go install github.com/lucasvidela94/jira-mcp@latest</span></span>
-        </div>
-      </div>
-
-      <div style="text-align: center; margin-top: 36px;">
+      <div style="text-align: center; margin-top: 32px;">
         <a href="https://github.com/lucasvidela94/jira-mcp#client-setup" target="_blank" class="btn btn-primary">
-          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 12h6m-3-3v6m-7 4h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/></svg>
-          Configure for Claude / Cursor / OpenCode
+          Configure for Claude / Cursor / OpenCode &rarr;
         </a>
       </div>
     </div>
-  </section>
+  </div>
 
-  <!-- CONFIG -->
-  <section style="padding: 80px 0; border-top: 1px solid var(--border);">
-    <div class="container" style="max-width: 740px;">
-      <h2 style="font-size: 2rem; font-weight: 700; margin-bottom: 12px; text-align: center;">One config, all clients</h2>
-      <p style="text-align: center; color: var(--text-secondary); margin-bottom: 24px;">Same env vars, same binary, works everywhere.</p>
-      <div class="terminal-window">
+  <!-- CONFIGURATION -->
+  <div class="section">
+    <div class="container" style="max-width: 680px;">
+      <h2 style="text-align: center;">One config, all clients</h2>
+      <p class="subtitle" style="text-align: center;">Same env vars, same binary, works with any MCP client.</p>
+
+      <div class="terminal">
         <div class="terminal-header">
-          <span class="terminal-dot"></span>
-          <span class="terminal-dot"></span>
-          <span class="terminal-dot"></span>
-          <span class="terminal-title">env</span>
+          <span class="dot"></span><span class="dot"></span><span class="dot"></span>
+          <span class="terminal-title">Configuration</span>
         </div>
         <div class="terminal-body">
-          <span class="terminal-line"><span class="prompt">$</span> <span class="cmd">export JIRA_URL=https://yourcompany.atlassian.net</span></span>
-          <span class="terminal-line"><span class="prompt">$</span> <span class="cmd">export JIRA_USERNAME=you@example.com</span></span>
-          <span class="terminal-line"><span class="prompt">$</span> <span class="cmd">export JIRA_API_TOKEN=your-token</span></span>
-          <span class="terminal-line">&nbsp;</span>
-          <span class="terminal-line"><span class="arrow">#</span> <span class="output">Optional: restrict which tools the AI can use</span></span>
-          <span class="terminal-line"><span class="prompt">$</span> <span class="cmd">export ENABLED_TOOLS="jira_search,jira_get_issue,jira_list_projects"</span></span>
+          <div class="line cmd"><span>$ export JIRA_URL=https://yourcompany.atlassian.net</span></div>
+          <div class="line cmd"><span>$ export JIRA_USERNAME=you@example.com</span></div>
+          <div class="line cmd"><span>$ export JIRA_API_TOKEN=your-token</span></div>
+          <div class="line arrow"><span># Optional: restrict which tools the AI can see</span></div>
+          <div class="line cmd"><span>$ export ENABLED_TOOLS="jira_search,jira_get_issue,jira_list_projects"</span></div>
         </div>
       </div>
     </div>
-  </section>
+  </div>
 
-  <!-- TOOLS -->
-  <section style="padding: 80px 0; border-top: 1px solid var(--border);">
+  <!-- TOOLS LIST -->
+  <div class="section-shaded">
     <div class="container">
-      <h2 style="font-size: 2rem; font-weight: 700; margin-bottom: 36px; text-align: center;">24 tools, one binary</h2>
-      <div style="display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 8px;">
+      <h2 style="text-align: center;">All 24 tools</h2>
+      <p class="subtitle" style="text-align: center;">One binary covers your entire Jira workflow.</p>
+      <div class="tools-grid">
         {tools.map(tool => (
-          <div style="display: flex; align-items: center; gap: 12px; padding: 10px 16px; border-radius: 8px; background: var(--bg-card); border: 1px solid var(--border);">
-            <code style="font-size: 13px; color: var(--jira-blue-light); white-space: nowrap;">{tool.name}</code>
-            <span style="font-size: 13px; color: var(--text-secondary);">{tool.desc}</span>
+          <div class="tool-item">
+            <code>{tool.name}</code>
+            <span>{tool.desc}</span>
           </div>
         ))}
       </div>
     </div>
-  </section>
+  </div>
 
   <!-- FOOTER -->
-  <footer style="border-top: 1px solid var(--border); padding: 40px 0; text-align: center;">
+  <div style="border-top: 1px solid var(--border); padding: 24px 0; text-align: center;">
     <div class="container">
-      <a href="https://github.com/lucasvidela94/jira-mcp" target="_blank" style="display: inline-flex; align-items: center; gap: 8px; color: var(--text-muted); font-size: 14px;">
-        <svg width="16" height="16" viewBox="0 0 16 16" fill="currentColor"><path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0016 8c0-4.42-3.58-8-8-8z"/></svg>
-        lucasvidela94/jira-mcp &middot; MIT
-      </a>
+      <p style="color: var(--text-muted); font-size: 13px;">
+        <a href="https://github.com/lucasvidela94/jira-mcp" target="_blank" style="color: var(--text-muted); text-decoration: none;">lucasvidela94/jira-mcp</a>
+        &nbsp;&middot;&nbsp; MIT License
+      </p>
     </div>
-  </footer>
+  </div>
 
 </Layout>
