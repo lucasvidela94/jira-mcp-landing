@@ -1,183 +1,125 @@
 ---
 import Layout from '../layouts/Layout.astro';
+import Nav from '../components/Nav.astro';
+import Hero from '../components/Hero.astro';
+import Terminal from '../components/Terminal.astro';
+import Card from '../components/Card.astro';
+import ToolGrid from '../components/ToolGrid.astro';
+import Footer from '../components/Footer.astro';
 
-const tools = [
-  { name: 'jira_search', desc: 'Search issues using JQL' },
-  { name: 'jira_get_issue', desc: 'Get issue by key' },
-  { name: 'jira_create_issue', desc: 'Create new issues' },
-  { name: 'jira_update_issue', desc: 'Update existing issues' },
-  { name: 'jira_transition_issue', desc: 'Transition through workflows' },
-  { name: 'jira_assign_issue', desc: 'Assign to users' },
-  { name: 'jira_delete_issue', desc: 'Delete issues' },
-  { name: 'jira_list_projects', desc: 'List accessible projects' },
-  { name: 'jira_get_transitions', desc: 'List available transitions' },
-  { name: 'jira_add_comment', desc: 'Add comments' },
-  { name: 'jira_add_worklog', desc: 'Log work' },
-  { name: 'jira_list_boards', desc: 'List Agile boards' },
-  { name: 'jira_list_sprints', desc: 'List sprints' },
-  { name: 'jira_get_sprint', desc: 'Get sprint by ID' },
-  { name: 'jira_get_active_sprint', desc: 'Get active sprint' },
-  { name: 'jira_search_sprint_by_name', desc: 'Search sprints' },
-  { name: 'jira_get_issue_history', desc: 'Get changelog' },
-  { name: 'jira_list_project_versions', desc: 'List versions' },
-  { name: 'jira_get_version', desc: 'Get version by ID' },
-  { name: 'jira_get_development_info', desc: 'Linked PRs & commits' },
-  { name: 'jira_list_statuses', desc: 'List project statuses' },
-  { name: 'jira_create_issue_link', desc: 'Link two issues' },
-  { name: 'jira_get_related_issues', desc: 'Get linked issues' },
-  { name: 'jira_create_child_issue', desc: 'Create sub-tasks' },
+const whyCards = [
+  {
+    title: 'Zero-friction binary',
+    desc: 'Written in Go. No Python, no Node, no runtime. One binary, one command, done.',
+    icon: 'globe',
+  },
+  {
+    title: '24 tools',
+    desc: 'Issues, sprints, boards, history, versions, linking, sub-tasks, dev info — full Jira coverage.',
+    icon: 'grid',
+  },
+  {
+    title: 'Safe by design',
+    desc: 'Credentials are never logged, leaked, or returned in tool results. Sanitized at two layers.',
+    icon: 'lock',
+  },
+  {
+    title: 'CLI + MCP',
+    desc: 'Run as an MCP server for your AI client, or use the standalone CLI directly in your terminal.',
+    icon: 'external',
+  },
+  {
+    title: 'HTTP/SSE + Docker',
+    desc: 'stdio for local, HTTP/SSE for remote, Docker for containers. Works everywhere.',
+    icon: 'package',
+  },
+  {
+    title: 'Self-updating',
+    desc: 'jira-mcp update checks GitHub releases and replaces itself. No package manager needed.',
+    icon: 'refresh',
+  },
 ];
 ---
 
 <Layout>
 
-  <!-- HERO -->
   <div class="bg-gradient-to-b from-bg to-bg-raised border-b border-border">
-    <nav class="flex items-center justify-between h-14 px-6 max-w-[1000px] mx-auto">
-      <a href="/" class="flex items-center gap-2 font-bold text-base text-text no-underline hover:no-underline">
-        <svg width="20" height="20" viewBox="0 0 100 100"><rect width="100" height="100" rx="16" fill="#0052CC"/><text x="50" y="65" text-anchor="middle" fill="white" font-size="55" font-weight="bold" font-family="system-ui">J</text></svg>
-        jira-mcp
-      </a>
-      <a href="https://github.com/lucasvidela94/jira-mcp" target="_blank" class="flex items-center gap-1.5 text-text-secondary text-sm no-underline hover:text-blue-hover">
-        <svg width="16" height="16" viewBox="0 0 16 16" fill="currentColor"><path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0016 8c0-4.42-3.58-8-8-8z"/></svg>
-        GitHub
-      </a>
-    </nav>
-
-    <div class="px-6 pt-20 pb-[72px] text-center">
-      <span class="inline-block px-2 py-0.5 rounded-[3px] text-xs font-semibold bg-blue-100 text-blue mb-4">v0.5.0 &middot; 24 tools</span>
-      <h1 class="text-[clamp(2.2rem,5vw,3.6rem)] font-extrabold tracking-tight leading-[1.1] mb-3 text-text">
-        Jira, meet AI.
-      </h1>
-      <p class="text-[17px] text-text-secondary max-w-[560px] mx-auto mb-7 leading-relaxed">
-        A single Go binary that connects your AI tools to Jira&nbsp;Cloud.
-        Search, create, update, and manage issues from any MCP-compatible client.
-      </p>
-      <div class="flex gap-2 justify-center flex-wrap">
-        <a href="#install" class="inline-flex items-center gap-2 px-5 py-2.5 rounded-[3px] font-semibold text-sm leading-none no-underline transition-all duration-150 bg-blue text-white shadow-[var(--shadow-jira)] hover:bg-blue-hover hover:-translate-y-0.5 hover:shadow-[var(--shadow-raised)] hover:text-white hover:no-underline">
-          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4M7 10l5 5 5-5M12 15V3"/></svg>
-          Install
-        </a>
-        <a href="#cli" class="inline-flex items-center gap-2 px-5 py-2.5 rounded-[3px] font-semibold text-sm leading-none no-underline transition-all duration-150 bg-transparent text-text border border-border hover:bg-bg-subtle hover:border-blue hover:no-underline">
-          Try the CLI
-        </a>
-      </div>
-    </div>
+    <Nav />
+    <Hero />
   </div>
 
-  <!-- TERMINAL -->
   <div id="cli" class="py-16 bg-bg-raised scroll-mt-6">
     <div class="max-w-[740px] mx-auto px-6">
-      <div class="bg-terminal rounded-[var(--radius-terminal)] overflow-hidden shadow-[var(--shadow-terminal)] text-[13px] leading-relaxed">
-        <div class="flex items-center gap-2 px-4 py-3 bg-white/[.04] border-b border-[var(--color-terminal-border)]">
-          <span class="terminal-dot"></span>
-          <span class="terminal-dot"></span>
-          <span class="terminal-dot"></span>
-          <span class="ml-2 text-[11px] tracking-wide uppercase text-white/35 font-mono">jira-mcp</span>
-        </div>
-        <div class="p-5 overflow-x-auto">
-          <div class="block whitespace-pre-wrap break-all min-h-[22px] before:content-['$_'] before:text-white/40 before:select-none"><span class="text-[#E6EDF3]">jira-mcp list-boards MC</span></div>
-          <div class="block whitespace-pre-wrap break-all min-h-[22px]"><span class="text-[#E6EDF3]/55">{`[{"id":265,"name":"MC board","type":"simple"}]`}</span></div>
-          <div class="block whitespace-pre-wrap break-all min-h-[22px] before:content-['$_'] before:text-white/40 before:select-none"><span class="text-[#E6EDF3]">jira-mcp get-active-sprint 265</span></div>
-          <div class="block whitespace-pre-wrap break-all min-h-[22px]"><span class="text-[#E6EDF3]/55">{`{"id":1268,"name":"MC Sprint 15","state":"active"}`}</span></div>
-          <div class="block whitespace-pre-wrap break-all min-h-[22px] before:content-['$_'] before:text-white/40 before:select-none"><span class="text-[#E6EDF3]">jira-mcp search "sprint = 1268"</span></div>
-          <div class="block whitespace-pre-wrap break-all min-h-[22px]"><span class="text-[#E6EDF3]/55">{`{"total":25,"issues":[...]}`}</span></div>
-        </div>
-      </div>
+      <Terminal
+        title="jira-mcp"
+        commands={[
+          { type: 'cmd', text: 'jira-mcp list-boards MC' },
+          { type: 'out', text: '[{"id":265,"name":"MC board","type":"simple"}]' },
+          { type: 'cmd', text: 'jira-mcp get-active-sprint 265' },
+          { type: 'out', text: '{"id":1268,"name":"MC Sprint 15","state":"active"}' },
+          { type: 'cmd', text: 'jira-mcp search "sprint = 1268"' },
+          { type: 'out', text: '{"total":25,"issues":[...]}' },
+        ]}
+      />
     </div>
   </div>
 
-  <!-- WHY -->
   <div class="py-16">
     <div class="max-w-[1000px] mx-auto px-6">
       <h2 class="text-center text-[28px] font-bold tracking-tight mb-2">Why jira-mcp?</h2>
       <p class="text-center text-text-secondary text-base mb-10">Built for developers who want their AI tools to speak Jira natively.</p>
       <div class="grid grid-cols-[repeat(auto-fit,minmax(280px,1fr))] gap-4">
-        <div class="bg-bg-card border border-border rounded-[3px] p-6 transition-all duration-200 hover:shadow-[var(--shadow-raised)] hover:border-blue">
-          <div class="inline-flex items-center justify-center w-9 h-9 bg-blue-100 rounded-[3px] mb-4 text-blue">
-            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="2"/><path d="M12 2a10 10 0 000 20"/><path d="M12 2a10 10 0 010 20"/></svg>
-          </div>
-          <h3 class="text-sm font-semibold mb-1">Zero-friction binary</h3>
-          <p class="text-sm text-text-secondary leading-relaxed">Written in Go. No Python, no Node, no runtime. One binary, one command, done.</p>
-        </div>
-        <div class="bg-bg-card border border-border rounded-[3px] p-6 transition-all duration-200 hover:shadow-[var(--shadow-raised)] hover:border-blue">
-          <div class="inline-flex items-center justify-center w-9 h-9 bg-blue-100 rounded-[3px] mb-4 text-blue">
-            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M3 9h18"/></svg>
-          </div>
-          <h3 class="text-sm font-semibold mb-1">24 tools</h3>
-          <p class="text-sm text-text-secondary leading-relaxed">Issues, sprints, boards, history, versions, linking, sub-tasks, dev info — full Jira coverage.</p>
-        </div>
-        <div class="bg-bg-card border border-border rounded-[3px] p-6 transition-all duration-200 hover:shadow-[var(--shadow-raised)] hover:border-blue">
-          <div class="inline-flex items-center justify-center w-9 h-9 bg-blue-100 rounded-[3px] mb-4 text-blue">
-            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0110 0v4"/></svg>
-          </div>
-          <h3 class="text-sm font-semibold mb-1">Safe by design</h3>
-          <p class="text-sm text-text-secondary leading-relaxed">Credentials are never logged, leaked, or returned in tool results. Sanitized at two layers.</p>
-        </div>
-        <div class="bg-bg-card border border-border rounded-[3px] p-6 transition-all duration-200 hover:shadow-[var(--shadow-raised)] hover:border-blue">
-          <div class="inline-flex items-center justify-center w-9 h-9 bg-blue-100 rounded-[3px] mb-4 text-blue">
-            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="16 3 21 3 21 8"/><path d="M4 14l6-6 4 4 6-6"/><path d="M21 11v7a2 2 0 01-2 2H5a2 2 0 01-2-2V6a2 2 0 012-2h7"/></svg>
-          </div>
-          <h3 class="text-sm font-semibold mb-1">CLI + MCP</h3>
-          <p class="text-sm text-text-secondary leading-relaxed">Run as an MCP server for your AI client, or use the standalone CLI directly in your terminal.</p>
-        </div>
-        <div class="bg-bg-card border border-border rounded-[3px] p-6 transition-all duration-200 hover:shadow-[var(--shadow-raised)] hover:border-blue">
-          <div class="inline-flex items-center justify-center w-9 h-9 bg-blue-100 rounded-[3px] mb-4 text-blue">
-            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 16V8a2 2 0 00-1-1.73l-7-4a2 2 0 00-2 0l-7 4A2 2 0 002 8v8a2 2 0 001 1.73l7 4a2 2 0 002 0l7-4A2 2 0 0021 16z"/><circle cx="12" cy="12" r="2"/></svg>
-          </div>
-          <h3 class="text-sm font-semibold mb-1">HTTP/SSE + Docker</h3>
-          <p class="text-sm text-text-secondary leading-relaxed">stdio for local, HTTP/SSE for remote, Docker for containers. Works everywhere.</p>
-        </div>
-        <div class="bg-bg-card border border-border rounded-[3px] p-6 transition-all duration-200 hover:shadow-[var(--shadow-raised)] hover:border-blue">
-          <div class="inline-flex items-center justify-center w-9 h-9 bg-blue-100 rounded-[3px] mb-4 text-blue">
-            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M23 4v6h-6M1 20v-6h6"/><path d="M20.19 7A10 10 0 004 16.95M3.81 17A10 10 0 0020 7.05"/></svg>
-          </div>
-          <h3 class="text-sm font-semibold mb-1">Self-updating</h3>
-          <p class="text-sm text-text-secondary leading-relaxed"><span class="inline-block px-2 py-[3px] bg-bg-subtle rounded-[3px] font-mono text-xs text-text-secondary leading-none">jira-mcp update</span> checks GitHub releases and replaces itself. No package manager needed.</p>
-        </div>
+        {whyCards.map(card => (
+          <Card title={card.title} description={card.desc}>
+            <Fragment slot="icon">
+              {card.icon === 'globe' && (
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="2"/><path d="M12 2a10 10 0 000 20"/><path d="M12 2a10 10 0 010 20"/></svg>
+              )}
+              {card.icon === 'grid' && (
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M3 9h18"/></svg>
+              )}
+              {card.icon === 'lock' && (
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0110 0v4"/></svg>
+              )}
+              {card.icon === 'external' && (
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="16 3 21 3 21 8"/><path d="M4 14l6-6 4 4 6-6"/><path d="M21 11v7a2 2 0 01-2 2H5a2 2 0 01-2-2V6a2 2 0 012-2h7"/></svg>
+              )}
+              {card.icon === 'package' && (
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 16V8a2 2 0 00-1-1.73l-7-4a2 2 0 00-2 0l-7 4A2 2 0 002 8v8a2 2 0 001 1.73l7 4a2 2 0 002 0l7-4A2 2 0 0021 16z"/><circle cx="12" cy="12" r="2"/></svg>
+              )}
+              {card.icon === 'refresh' && (
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M23 4v6h-6M1 20v-6h6"/><path d="M20.19 7A10 10 0 004 16.95M3.81 17A10 10 0 0020 7.05"/></svg>
+              )}
+            </Fragment>
+          </Card>
+        ))}
       </div>
     </div>
   </div>
 
-  <!-- INSTALL -->
   <div id="install" class="py-16 bg-bg-raised scroll-mt-6">
     <div class="max-w-[680px] mx-auto px-6">
       <h2 class="text-center text-[28px] font-bold tracking-tight mb-2">Install in seconds</h2>
       <p class="text-center text-text-secondary text-base mb-10">macOS, Linux, Windows, ARM64. Choose your path.</p>
       <div class="grid gap-3">
-        <div class="bg-terminal rounded-[var(--radius-terminal)] overflow-hidden shadow-[var(--shadow-terminal)] text-[13px] leading-relaxed">
-          <div class="flex items-center gap-2 px-4 py-3 bg-white/[.04] border-b border-[var(--color-terminal-border)]">
-            <span class="terminal-dot"></span>
-            <span class="terminal-dot"></span>
-            <span class="terminal-dot"></span>
-            <span class="ml-2 text-[11px] tracking-wide uppercase text-white/35 font-mono">Homebrew</span>
-          </div>
-          <div class="p-5 overflow-x-auto">
-            <div class="block whitespace-pre-wrap break-all min-h-[22px] before:content-['$_'] before:text-white/40 before:select-none"><span class="text-[#E6EDF3]">brew tap lucasvidela94/tap && brew install jira-mcp</span></div>
-          </div>
-        </div>
-        <div class="bg-terminal rounded-[var(--radius-terminal)] overflow-hidden shadow-[var(--shadow-terminal)] text-[13px] leading-relaxed">
-          <div class="flex items-center gap-2 px-4 py-3 bg-white/[.04] border-b border-[var(--color-terminal-border)]">
-            <span class="terminal-dot"></span>
-            <span class="terminal-dot"></span>
-            <span class="terminal-dot"></span>
-            <span class="ml-2 text-[11px] tracking-wide uppercase text-white/35 font-mono">Install script</span>
-          </div>
-          <div class="p-5 overflow-x-auto">
-            <div class="block whitespace-pre-wrap break-all min-h-[22px] before:content-['$_'] before:text-white/40 before:select-none"><span class="text-[#E6EDF3]">curl -fsSL https://raw.githubusercontent.com/lucasvidela94/jira-mcp/master/scripts/install.sh | bash</span></div>
-          </div>
-        </div>
-        <div class="bg-terminal rounded-[var(--radius-terminal)] overflow-hidden shadow-[var(--shadow-terminal)] text-[13px] leading-relaxed">
-          <div class="flex items-center gap-2 px-4 py-3 bg-white/[.04] border-b border-[var(--color-terminal-border)]">
-            <span class="terminal-dot"></span>
-            <span class="terminal-dot"></span>
-            <span class="terminal-dot"></span>
-            <span class="ml-2 text-[11px] tracking-wide uppercase text-white/35 font-mono">Go</span>
-          </div>
-          <div class="p-5 overflow-x-auto">
-            <div class="block whitespace-pre-wrap break-all min-h-[22px] before:content-['$_'] before:text-white/40 before:select-none"><span class="text-[#E6EDF3]">go install github.com/lucasvidela94/jira-mcp@latest</span></div>
-          </div>
-        </div>
+        <Terminal
+          title="Homebrew"
+          commands={[
+            { type: 'cmd', text: 'brew tap lucasvidela94/tap && brew install jira-mcp' },
+          ]}
+        />
+        <Terminal
+          title="Install script"
+          commands={[
+            { type: 'cmd', text: 'curl -fsSL https://raw.githubusercontent.com/lucasvidela94/jira-mcp/master/scripts/install.sh | bash' },
+          ]}
+        />
+        <Terminal
+          title="Go"
+          commands={[
+            { type: 'cmd', text: 'go install github.com/lucasvidela94/jira-mcp@latest' },
+          ]}
+        />
       </div>
       <div class="text-center mt-8">
         <a href="https://github.com/lucasvidela94/jira-mcp#client-setup" target="_blank" class="inline-flex items-center gap-2 px-5 py-2.5 rounded-[3px] font-semibold text-sm leading-none no-underline transition-all duration-150 bg-blue text-white shadow-[var(--shadow-jira)] hover:bg-blue-hover hover:-translate-y-0.5 hover:shadow-[var(--shadow-raised)] hover:text-white hover:no-underline">
@@ -187,53 +129,31 @@ const tools = [
     </div>
   </div>
 
-  <!-- CONFIGURATION -->
   <div class="py-16">
     <div class="max-w-[680px] mx-auto px-6">
       <h2 class="text-center text-[28px] font-bold tracking-tight mb-2">One config, all clients</h2>
       <p class="text-center text-text-secondary text-base mb-10">Same env vars, same binary, works with any MCP client.</p>
-      <div class="bg-terminal rounded-[var(--radius-terminal)] overflow-hidden shadow-[var(--shadow-terminal)] text-[13px] leading-relaxed">
-        <div class="flex items-center gap-2 px-4 py-3 bg-white/[.04] border-b border-[var(--color-terminal-border)]">
-          <span class="terminal-dot"></span>
-          <span class="terminal-dot"></span>
-          <span class="terminal-dot"></span>
-          <span class="ml-2 text-[11px] tracking-wide uppercase text-white/35 font-mono">Configuration</span>
-        </div>
-        <div class="p-5 overflow-x-auto">
-          <div class="block whitespace-pre-wrap break-all min-h-[22px] before:content-['$_'] before:text-white/40 before:select-none"><span class="text-[#E6EDF3]">export JIRA_URL=https://yourcompany.atlassian.net</span></div>
-          <div class="block whitespace-pre-wrap break-all min-h-[22px] before:content-['$_'] before:text-white/40 before:select-none"><span class="text-[#E6EDF3]">export JIRA_USERNAME=you@example.com</span></div>
-          <div class="block whitespace-pre-wrap break-all min-h-[22px] before:content-['$_'] before:text-white/40 before:select-none"><span class="text-[#E6EDF3]">export JIRA_API_TOKEN=your-token</span></div>
-          <div class="block font-mono italic whitespace-pre-wrap break-all min-h-[22px]"><span class="text-white/35 italic"># Optional: restrict which tools the AI can see</span></div>
-          <div class="block whitespace-pre-wrap break-all min-h-[22px] before:content-['$_'] before:text-white/40 before:select-none"><span class="text-[#E6EDF3]">export ENABLED_TOOLS="jira_search,jira_get_issue,jira_list_projects"</span></div>
-        </div>
-      </div>
+      <Terminal
+        title="Configuration"
+        commands={[
+          { type: 'cmd', text: 'export JIRA_URL=https://yourcompany.atlassian.net' },
+          { type: 'cmd', text: 'export JIRA_USERNAME=you@example.com' },
+          { type: 'cmd', text: 'export JIRA_API_TOKEN=your-token' },
+          { type: 'arrow', text: '# Optional: restrict which tools the AI can see' },
+          { type: 'cmd', text: 'export ENABLED_TOOLS="jira_search,jira_get_issue,jira_list_projects"' },
+        ]}
+      />
     </div>
   </div>
 
-  <!-- TOOLS LIST -->
   <div class="py-16 bg-bg-raised">
     <div class="max-w-[1000px] mx-auto px-6">
       <h2 class="text-center text-[28px] font-bold tracking-tight mb-2">All 24 tools</h2>
       <p class="text-center text-text-secondary text-base mb-10">One binary covers your entire Jira workflow.</p>
-      <div class="grid grid-cols-[repeat(auto-fill,minmax(280px,1fr))] gap-1.5">
-        {tools.map(tool => (
-          <div class="flex items-center gap-2.5 px-3 py-2 rounded-[3px] bg-bg-subtle text-[13px] transition-all duration-150 hover:bg-blue-100">
-            <code class="text-xs text-blue shrink-0 font-medium">{tool.name}</code>
-            <span class="text-text-secondary">{tool.desc}</span>
-          </div>
-        ))}
-      </div>
+      <ToolGrid />
     </div>
   </div>
 
-  <!-- FOOTER -->
-  <div class="border-t border-border py-6 text-center">
-    <div class="max-w-[1000px] mx-auto px-6">
-      <p class="text-text-muted text-[13px]">
-        <a href="https://github.com/lucasvidela94/jira-mcp" target="_blank" class="text-text-muted no-underline hover:text-blue">lucasvidela94/jira-mcp</a>
-        &nbsp;&middot;&nbsp; MIT License
-      </p>
-    </div>
-  </div>
+  <Footer />
 
 </Layout>

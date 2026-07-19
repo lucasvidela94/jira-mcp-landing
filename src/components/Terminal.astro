@@ -1,0 +1,45 @@
+---
+interface CommandLine {
+  type: 'cmd' | 'out' | 'arrow';
+  text: string;
+}
+
+interface Props {
+  title: string;
+  commands: CommandLine[];
+}
+
+const { title, commands } = Astro.props;
+---
+
+<div class="bg-terminal rounded-[var(--radius-terminal)] overflow-hidden shadow-[var(--shadow-terminal)] text-[13px] leading-relaxed">
+  <div class="flex items-center gap-2 px-4 py-3 bg-white/[.04] border-b border-[var(--color-terminal-border)]">
+    <span class="terminal-dot"></span>
+    <span class="terminal-dot"></span>
+    <span class="terminal-dot"></span>
+    <span class="ml-2 text-[11px] tracking-wide uppercase text-white/35 font-mono">{title}</span>
+  </div>
+  <div class="p-5 overflow-x-auto">
+    {
+      commands.map(cmd => {
+        const lineClass = [
+          'block font-mono whitespace-pre-wrap break-all min-h-[22px]',
+          cmd.type === 'cmd' ? "before:content-['$_'] before:text-white/40 before:select-none" : '',
+          cmd.type === 'arrow' ? 'italic' : '',
+        ].filter(Boolean).join(' ');
+
+        const spanClass = cmd.type === 'cmd'
+          ? 'text-[#E6EDF3]'
+          : cmd.type === 'arrow'
+            ? 'text-white/35'
+            : 'text-[#E6EDF3]/55';
+
+        return (
+          <div class={lineClass}>
+            <span class={spanClass}>{cmd.text}</span>
+          </div>
+        );
+      })
+    }
+  </div>
+</div>

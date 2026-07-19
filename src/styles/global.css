@@ -39,10 +39,15 @@ code, pre {
   color: var(--color-blue);
 }
 
-.terminal-header::before {
-  content: '';
-  display: flex;
-  gap: 6px;
+.cmd {
+  display: inline-block;
+  padding: 2px 6px;
+  background: var(--color-bg-subtle);
+  border-radius: var(--radius-jira);
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 12px;
+  color: var(--color-text-secondary);
+  line-height: 1.2;
 }
 
 .terminal-dot {
@@ -54,7 +59,3 @@ code, pre {
 .terminal-dot:nth-child(1) { background: #FF5F56; }
 .terminal-dot:nth-child(2) { background: #FFBD2E; }
 .terminal-dot:nth-child(3) { background: #27C93F; }
-
-@media (max-width: 640px) {
-  .container { padding-left: 16px; padding-right: 16px; }
-}
