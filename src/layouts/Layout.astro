@@ -1,0 +1,147 @@
+---
+interface Props {
+  title?: string;
+  description?: string;
+}
+
+const { title = 'jira-mcp — Jira MCP Server', description = 'Model Context Protocol server for Jira Cloud. Search, create, update, transition, and manage Jira issues from any MCP-compatible AI client.' } = Astro.props;
+---
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>{title}</title>
+    <meta name="description" content={description} />
+    <meta name="color-scheme" content="dark" />
+
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:ital,wght@0,400;0,500;0,600;1,400&family=Plus+Jakarta+Sans:wght@500;600;700;800&display=swap" rel="stylesheet" />
+
+    <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>⚡</text></svg>" />
+
+    <style>
+      *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+      :root {
+        --jira-blue: #0052CC;
+        --jira-blue-light: #2684FF;
+        --jira-blue-dark: #0747A6;
+        --jira-blue-glow: rgba(0, 82, 204, 0.15);
+        --bg-primary: #0D1117;
+        --bg-secondary: #161B22;
+        --bg-card: #1C2128;
+        --border: #30363D;
+        --text-primary: #F0F6FC;
+        --text-secondary: #8B949E;
+        --text-muted: #484F58;
+        --success: #3FB950;
+        --warning: #D29922;
+      }
+
+      html { scroll-behavior: smooth; }
+
+      body {
+        font-family: 'Plus Jakarta Sans', system-ui, sans-serif;
+        background: var(--bg-primary);
+        color: var(--text-primary);
+        line-height: 1.6;
+        -webkit-font-smoothing: antialiased;
+      }
+
+      code, pre { font-family: 'JetBrains Mono', monospace; }
+
+      a { color: var(--jira-blue-light); text-decoration: none; transition: color 0.2s; }
+      a:hover { color: #fff; }
+
+      .container { max-width: 960px; margin: 0 auto; padding: 0 24px; }
+
+      .btn {
+        display: inline-flex; align-items: center; gap: 8px;
+        padding: 12px 24px; border-radius: 8px;
+        font-family: 'Plus Jakarta Sans', sans-serif;
+        font-weight: 600; font-size: 15px;
+        border: none; cursor: pointer;
+        transition: all 0.2s;
+        text-decoration: none;
+      }
+
+      .btn-primary {
+        background: linear-gradient(135deg, var(--jira-blue), var(--jira-blue-light));
+        color: #fff;
+        box-shadow: 0 4px 20px var(--jira-blue-glow);
+      }
+      .btn-primary:hover { transform: translateY(-2px); box-shadow: 0 8px 30px rgba(0, 82, 204, 0.3); color: #fff; }
+
+      .btn-ghost {
+        background: transparent; color: var(--text-primary);
+        border: 1px solid var(--border);
+      }
+      .btn-ghost:hover { border-color: var(--jira-blue); background: rgba(0, 82, 204, 0.1); }
+
+      .terminal-window {
+        background: #0D1117;
+        border: 1px solid var(--border);
+        border-radius: 12px;
+        overflow: hidden;
+        box-shadow: 0 8px 40px rgba(0,0,0,0.3);
+      }
+
+      .terminal-header {
+        display: flex; align-items: center; gap: 8px;
+        padding: 12px 16px;
+        background: var(--bg-secondary);
+        border-bottom: 1px solid var(--border);
+      }
+
+      .terminal-dot { width: 12px; height: 12px; border-radius: 50%; }
+      .terminal-dot:nth-child(1) { background: #FF5F56; }
+      .terminal-dot:nth-child(2) { background: #FFBD2E; }
+      .terminal-dot:nth-child(3) { background: #27C93F; }
+
+      .terminal-title { margin-left: 12px; font-size: 13px; color: var(--text-muted); font-family: 'JetBrains Mono', monospace; }
+
+      .terminal-body { padding: 20px; font-size: 14px; line-height: 1.7; }
+
+      .terminal-line { display: block; white-space: pre-wrap; word-break: break-all; }
+      .terminal-line .prompt { color: var(--success); }
+      .terminal-line .cmd { color: var(--text-primary); }
+      .terminal-line .output { color: var(--text-secondary); }
+      .terminal-line .arrow { color: var(--jira-blue-light); }
+
+      .card {
+        background: var(--bg-card);
+        border: 1px solid var(--border);
+        border-radius: 12px;
+        padding: 28px;
+        transition: all 0.3s;
+      }
+      .card:hover { border-color: var(--jira-blue); transform: translateY(-4px); box-shadow: 0 12px 40px rgba(0, 82, 204, 0.08); }
+
+      .tag {
+        display: inline-block;
+        padding: 4px 10px;
+        border-radius: 6px;
+        font-size: 12px;
+        font-weight: 600;
+        font-family: 'JetBrains Mono', monospace;
+      }
+      .tag-blue { background: rgba(0, 82, 204, 0.15); color: var(--jira-blue-light); }
+      .tag-green { background: rgba(63, 185, 80, 0.15); color: var(--success); }
+      .tag-purple { background: rgba(130, 80, 223, 0.15); color: #9D7BDF; }
+
+      @media (max-width: 640px) {
+        .container { padding: 0 16px; }
+        .terminal-body { padding: 16px; font-size: 13px; }
+        .btn { width: 100%; justify-content: center; }
+      }
+
+      :focus-visible { outline: 2px solid var(--jira-blue); outline-offset: 2px; }
+    </style>
+  </head>
+  <body>
+    <slot />
+  </body>
+</html>
