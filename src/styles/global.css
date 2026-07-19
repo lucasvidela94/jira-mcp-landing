@@ -3,8 +3,7 @@
 @theme {
   --color-blue: #0052CC;
   --color-blue-hover: #0065FF;
-  --color-blue-light: #F4F9FF;
-  --color-blue-50: #F4F9FF;
+
   --color-blue-100: #E6F0FF;
   --color-bg: #FFFFFF;
   --color-bg-raised: #FAFBFB;
@@ -17,7 +16,6 @@
   --color-terminal: #1D2125;
   --color-terminal-border: rgba(255,255,255,.08);
 
-  --radius-jira: 3px;
   --radius-terminal: 8px;
 
   --shadow-jira: 0 1px 1px rgba(9,30,66,.08), 0 0 1px rgba(9,30,66,.12);
@@ -37,17 +35,6 @@ code, pre {
 ::selection {
   background-color: var(--color-blue-100);
   color: var(--color-blue);
-}
-
-.cmd {
-  display: inline-block;
-  padding: 2px 6px;
-  background: var(--color-bg-subtle);
-  border-radius: var(--radius-jira);
-  font-family: 'JetBrains Mono', monospace;
-  font-size: 12px;
-  color: var(--color-text-secondary);
-  line-height: 1.2;
 }
 
 .terminal-dot {
