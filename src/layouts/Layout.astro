@@ -4,11 +4,15 @@ import '../styles/global.css';
 interface Props {
   title?: string;
   description?: string;
+  ogImage?: string;
 }
 
-const { title, description } = Astro.props;
-const pageTitle = title || 'jira-mcp — Jira MCP Server';
+const { title, description, ogImage } = Astro.props;
+const site = 'https://lucasvidela94.github.io/jira-mcp-landing';
+const pageTitle = title ? `${title} — jira-mcp` : 'jira-mcp — Jira MCP Server';
 const pageDesc = description || 'Model Context Protocol server for Jira Cloud. Search, create, update, transition, and manage Jira issues from any MCP-compatible AI client.';
+const pageOgImage = ogImage || `${site}/og-image.svg`;
+const pageUrl = Astro.url;
 ---
 
 <!doctype html>
@@ -16,8 +20,47 @@ const pageDesc = description || 'Model Context Protocol server for Jira Cloud. S
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
     <title>{pageTitle}</title>
     <meta name="description" content={pageDesc} />
+
+    <link rel="canonical" href={pageUrl} />
+
+    <!-- Open Graph -->
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content={pageUrl} />
+    <meta property="og:title" content={pageTitle} />
+    <meta property="og:description" content={pageDesc} />
+    <meta property="og:image" content={pageOgImage} />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+
+    <!-- Twitter -->
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content={pageTitle} />
+    <meta name="twitter:description" content={pageDesc} />
+    <meta name="twitter:image" content={pageOgImage} />
+
+    <!-- JSON-LD Structured Data -->
+    <script type="application/ld+json" set:html={JSON.stringify({
+      "@context": "https://schema.org",
+      "@type": "SoftwareApplication",
+      "name": "jira-mcp",
+      "applicationCategory": "DeveloperApplication",
+      "operatingSystem": "macOS, Linux, Windows, ARM64",
+      "description": pageDesc,
+      "url": site,
+      "author": {
+        "@type": "Person",
+        "name": "Lucas Videla"
+      },
+      "offers": {
+        "@type": "Offer",
+        "price": "0",
+        "priceCurrency": "USD"
+      }
+    })} />
+
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,400;14..32,500;14..32,600;14..32,700;14..32,800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet" />
